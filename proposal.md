@@ -34,7 +34,7 @@ Data for the app will be sourced from a custom database that includes tables for
 
 The database schema will include tables for Users, Parks, Species, Hunts, and Hunt Items. Relationships will be established using foreign keys.
 
-![Database Schema](./drawSQL-national-parks-scavenger-hunt.png)
+[Database Schema](./drawSQL-national-parks-scavenger-hunt.png)
 
 ### b. API Considerations
 
