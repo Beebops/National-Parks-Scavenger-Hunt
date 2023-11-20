@@ -26,7 +26,7 @@ The primary users of the app are nature enthusiasts, families, and individuals w
 
 ## 6. Data Usage
 
-Data for the app will be sourced from a custom database that includes tables for users, parks, plant and animal species, hunts, and hunt items. Data will also come from the [National Park Service species list database](https://irma.nps.gov/NPSpecies), managed and updated by staff at individual national parks and the systemwide Inventory and Monitoring department. I will also integrate images for parks, plants, and animals. The database will be implemented using PostgreSQL. 
+Data for the app will be sourced from a custom database that includes tables for users, parks, plant and animal species, hunts, and hunt items. Data will also come from the [National Park Service species list database](https://irma.nps.gov/NPSpecies) and the [National Park Service API](https://www.nps.gov/subjects/developer/api-documentation.htm). I will also integrate images for parks, plants, and animals. The database will be implemented using PostgreSQL. 
 
 ## 7. Approach Outline
 
@@ -34,11 +34,11 @@ Data for the app will be sourced from a custom database that includes tables for
 
 The database schema will include tables for Users, Parks, Species, Hunts, and Hunt Items. Relationships will be established using foreign keys.
 
-![Database Schema](https://imgur.com/RECzUw3)
+![Database Schema](https://i.imgur.com/RECzUw3.png)
 
 ### b. API Considerations
 
-I will create a custom API using Express.js to handle data requests. A potential challenge I'm facing is figuring out how to find images of all the plant and animal species along with descriptions of them. I will also be using the [National Park Service API](https://www.nps.gov/subjects/developer/api-documentation.htm)
+I will create a custom API using Express.js to handle data requests. A potential challenge I'm facing is figuring out how to find images of all the plant and animal species along with descriptions of them. For now, I will just have links to wikipedia articles about the plants and animals and revist this if there is time to implement it.
 
 ### c. Security
 
@@ -54,11 +54,16 @@ This app will not contain any sensitive user information but passwords will be s
 
 ### e. User Flow
 
-1. User User registers or logs in.
-2. User explores available national parks.
-3. User User creates a personalized scavenger hunt, selecting plants and animals from the selected park.
-4. User participates in hunts, tracking progress.
-5. User views completed hunts and achievements.
+1. User registers or logs in.
+2. User home page shows existing in progress and completed hunts. There is also the option to create a new scavenger hunt.
+3. User creates a personalized scavenger hunt, first selecting which park they would like to create a hunt for.
+4. User can customize the difficulty of the hunt and whether or not they want to search for just animals, just plants, or a combination of both. 
+5. A scavenger hunt is then created showing the user a random selection of species from their selected national park.
+6. User can either accept the hunt as is, or modify or delete suggested species.
+7. If user chooses to modify a particular species, they will be given the option of chosing another random species that is found in the park.
+8. Scavenger hunt is accepted and saved to database.
+9. User participates in hunts, checking off tracking progress.
+10. User views completed hunts and achievements.
 
 ### f. Unique Features and Stretch Goals
 
