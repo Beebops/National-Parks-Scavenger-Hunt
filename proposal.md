@@ -66,10 +66,9 @@ This app will not contain any sensitive user information but passwords will be s
 
 ### f. Unique Features and Stretch Goals
 
-- **[Feature 1]:** Introduce a point system, badges, or rewards for completing hunts or finding certain rare animals.
-- **[Feature 2]:** Unlock achievement rewards for visiting a certain number of national parks
-- **[Stretch Goal 1]:** Upload and display images for parks, plants, and animals users have taken
-- **[Stretch Goal 2]:** Allow users to share their hunts and achievements on social media.
----
+- **[Feature ]:** Introduce badges/rewards for completing a certain number of scavenger hunts. 
+
+- **[Stretch Goal]:** Unlock achievement badges for locating rare/endangered/keystone animal species.
+
 
 
