@@ -36,15 +36,11 @@ The database schema will include tables for Users, Parks, Species, Hunts, and Hu
 
 ![Database Schema](./db-schema.png)
 
-### b. API Considerations
-
-I will create a custom API using Express.js to handle data requests. A potential challenge I'm facing is figuring out how to find images of all the plant and animal species along with descriptions of them. For now, I will just have links to wikipedia articles about the plants and animals and revist this if there is time to implement it.
-
-### c. Security
+### b. Security
 
 This app will not contain any sensitive user information but passwords will be securely hashed. Additionally, authentication and authorization will be implemented to ensure users only have access to their own scavenger hunts.
 
-### d. App Functionality
+### c. App Functionality
 
 - User registration and authentication
 - Species information display
