@@ -14,7 +14,7 @@ CREATE TABLE users (
 CREATE TABLE parks (
   park_id VARCHAR(10) PRIMARY KEY,
   park_name VARCHAR(100) NOT NULL,
-  park_state VARCHAR(2) NOT NULL,
+  park_state VARCHAR(50) NOT NULL,
   park_description TEXT,
   park_image TEXT
 );

@@ -5,12 +5,14 @@ const routes = require('./routes')
 
 const HuntsService = require('./services/HuntsService')
 const UserService = require('./services/UserService')
+const NationalParkAPIService = require('./services/NationalParkAPIService')
 
 module.exports = (config) => {
   const log = config.log()
 
   const huntsService = new HuntsService()
   const userService = new UserService()
+  const nationalParkAPIService = new NationalParkAPIService()
 
   // Add a request logging middleware in development mode
   if (app.get('env') === 'development') {
@@ -20,7 +22,7 @@ module.exports = (config) => {
     })
   }
 
-  app.use('/', routes({ huntsService, userService }))
+  app.use('/', routes({ huntsService, userService, nationalParkAPIService }))
 
   // eslint-disable-next-line no-unused-vars
   app.use((error, req, res, next) => {

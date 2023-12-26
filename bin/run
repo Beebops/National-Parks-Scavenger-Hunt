@@ -1,5 +1,12 @@
 #!/usr/bin/env node
-require('dotenv').config()
+if (process.env.NODE_ENV === 'production') {
+  require('dotenv').config({ path: '.env.production' })
+} else if (process.env.NODE_ENV === 'test') {
+  require('dotenv').config({ path: '.env.test' })
+} else {
+  require('dotenv').config({ path: '.env.development' })
+}
+
 const http = require('http')
 
 const config = require('../config')[process.env.NODE_ENV || 'development']
