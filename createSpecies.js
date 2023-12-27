@@ -1,4 +1,6 @@
 require('dotenv').config({ path: './.env.development' })
+const animalCategories = require('./animalsCategories')
+const parkCodes = require('./parkCodes')
 const axios = require('axios')
 
 GOOGLE_API_KEY = process.env.GOOGLE_API_KEY
@@ -25,19 +27,21 @@ async function getSpeciesGoogleKGData(species) {
 }
 
 async function getSpeciesIRMAData(parkCode, category) {
+  // return a partial species obj { scientificName, commonNames }
   try {
     const response = await axios.get(`${IRM_BASE_URL}/${parkCode}/${category}`)
     const speciesData = response.data
-    const allSpecies = speciesData.map((species) => ({
+    const allSpeciesByCategory = speciesData.map((species) => ({
       scientificName: species.ScientificName,
       commonNames: species.CommonNames,
     }))
-    console.log(allSpecies)
-    return allSpecies
+
+    return allSpeciesByCategory
   } catch (e) {
     console.error(e)
     return {}
   }
 }
-getSpeciesIRMAData('zion', 'mammals')
+
+//getSpeciesIRMAData('zion', 'mammals')
 //getSpeciesGoogleKGData('bald eagle')
