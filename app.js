@@ -24,7 +24,6 @@ module.exports = (config) => {
 
   app.use('/', routes({ huntsService, userService, nationalParkAPIService }))
 
-  // eslint-disable-next-line no-unused-vars
   app.use((error, req, res, next) => {
     res.status(error.status || 500)
     // Log out the error to the console
