@@ -22,7 +22,7 @@ CREATE TABLE parks (
 CREATE TABLE hunts (
   hunt_id SERIAL PRIMARY KEY,
   user_id INT,
-  FOREIGN KEY (user_id) REFERENCES users(user_id),
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
   park_id VARCHAR(10),
   FOREIGN KEY (park_id) REFERENCES parks(park_id),
   hunt_title VARCHAR(100) NOT NULL,
