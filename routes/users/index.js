@@ -1,4 +1,5 @@
 const express = require('express')
+const ExpressError = require('../../expressError')
 const router = express.Router()
 
 module.exports = (userService) => {
@@ -21,6 +22,20 @@ module.exports = (userService) => {
       } catch (err) {
         next(err)
       }
+    }
+  })
+
+  // Login User
+  router.post('/login', async (req, res, next) => {
+    try {
+      console.log(req.body)
+      const { username, password } = req.body
+      if (!username || !password)
+        throw new ExpressError('Username and password are required', 400)
+      const loginResponse = await userService.loginUser(username, password)
+      res.status(200).json(loginResponse)
+    } catch (err) {
+      next(err)
     }
   })
 
