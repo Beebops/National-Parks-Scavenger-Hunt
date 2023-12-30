@@ -18,9 +18,12 @@ class UserService {
     return result.rows[0]
   }
 
-  async createUser({ username, email, password }) {
+  async createUser({ username, email, password, passwordConfirmation }) {
     if (!username || !email || !password)
       throw new ExpressError('Username, email, and password are required', 400)
+
+    if (password !== passwordConfirmation)
+      throw new ExpressError('Passwords do not match', 400)
 
     const hashedPassword = await bcrypt.hash(password, 10)
     const result = await pool.query(
@@ -30,7 +33,6 @@ class UserService {
     return result.rows[0]
   }
 
-  // need to test this in Insomnia
   async loginUser(username, password) {
     const result = await pool.query(`SELECT * FROM users WHERE username = $1`, [
       username,
@@ -50,13 +52,14 @@ class UserService {
     throw new ExpressError('User not found', 404)
   }
 
-  // need to test this in Insomnia
   async updateUser(userId, updateData) {
-    const entries = Object.entries(updateData)
+    const entries = Object.entries(updateData) // [ [ 'username', 'Beth' ] ]
+
     const updates = entries
       .map(([key, value], index) => `${key} = $${index + 1}`)
-      .join(', ')
-    const values = entries.map(([key, value]) => value)
+      .join(', ') // updates username = $1
+
+    const values = entries.map(([key, value]) => value) // updates username = $1
 
     if (!updates) throw new ExpressError('No update data provided', 400)
 
