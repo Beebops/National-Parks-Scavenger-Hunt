@@ -1,5 +1,6 @@
 const express = require('express')
 const ExpressError = require('../../expressError')
+const authenticateJWT = require('../../middleware/authMiddleware')
 const router = express.Router()
 
 module.exports = (userService) => {
@@ -13,15 +14,13 @@ module.exports = (userService) => {
     }
   })
 
-  // Get a single user by user_id
-  router.get('/:userId', async (req, res, next) => {
-    {
-      try {
-        const user = await userService.getUserById(req.params.userId)
-        res.json(user)
-      } catch (err) {
-        next(err)
-      }
+  // Create a new user
+  router.post('/', async (req, res, next) => {
+    try {
+      const newUser = await userService.createUser(req.body)
+      res.status(201).json(newUser)
+    } catch (err) {
+      next(err)
     }
   })
 
@@ -39,13 +38,17 @@ module.exports = (userService) => {
     }
   })
 
-  // Create a new user
-  router.post('/', async (req, res, next) => {
-    try {
-      const newUser = await userService.createUser(req.body)
-      res.status(201).json(newUser)
-    } catch (err) {
-      next(err)
+  router.use(authenticateJWT)
+
+  // Get a single user by user_id
+  router.get('/:userId', async (req, res, next) => {
+    {
+      try {
+        const user = await userService.getUserById(req.params.userId)
+        res.json(user)
+      } catch (err) {
+        next(err)
+      }
     }
   })
 
