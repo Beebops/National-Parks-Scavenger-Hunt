@@ -33,8 +33,8 @@ CREATE TABLE hunts (
 
 CREATE TABLE species (
   species_id SERIAL PRIMARY KEY,
-  scientific_name VARCHAR(100) NOT NULL,
-  common_name VARCHAR(100) NOT NULL,
+  scientific_name VARCHAR(100) NOT NULL UNIQUE,
+  common_name VARCHAR(255) NOT NULL,
   species_description TEXT,
   species_image TEXT,
   species_wikipedia_link TEXT
