@@ -1,6 +1,6 @@
 const parkCodes = [
-  'acad',
-  'arch',
+  'acad', // done
+  'arch', // done
   'badl',
   'bibe',
   'bisc',
@@ -48,7 +48,7 @@ const parkCodes = [
   'wica',
   'yell',
   'yose',
-  'zion',
+  'zion', // done
 ]
 
 module.exports = parkCodes

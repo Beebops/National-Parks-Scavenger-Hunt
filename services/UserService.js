@@ -53,7 +53,7 @@ class UserService {
   }
 
   async updateUser(userId, updateData) {
-    const entries = Object.entries(updateData) // [ [ 'username', 'Beth' ] ]
+    const entries = Object.entries(updateData) // [ [ 'username', 'my_username' ] ]
 
     const updates = entries
       .map(([key, value], index) => `${key} = $${index + 1}`)

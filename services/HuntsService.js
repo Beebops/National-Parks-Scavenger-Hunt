@@ -2,10 +2,10 @@ const pool = require('../db')
 const ExpressError = require('../expressError')
 
 class HuntsService {
-  async createHunt(userId, parkId, huntTitle, selectedSpeciesIds) {
+  async createHunt({ userId, parkId, huntTitle, selectedSpeciesIds }) {
     const result = await pool.query(
       `INSERT INTO hunts (user_id, park_id, hunt_title, is_complete, date_started, date_completed)
-      VALUES ($1, $2, $3, $4, $5, $6) RETURNING hunt_id`,
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
       [userId, parkId, huntTitle, false, new Date(), null]
     )
     const newHuntId = result.rows[0].hunt_id
@@ -16,13 +16,14 @@ class HuntsService {
         [newHuntId, speciesId]
       )
     }
-    return newHuntId
+    console.log(result.rows[0])
+    return result.rows[0]
   }
 
   async getHuntsByUser(userId) {
     // returns an array of hunt objects
 
-    return `Getting all of ${userId}'s scavenger hunts`
+    return `Getting all of users's scavenger hunts`
   }
 
   async getHuntById(huntId) {
@@ -35,6 +36,7 @@ class HuntsService {
 
   async deleteHunt(huntId) {
     // returns a success message or confirmation that hunt was deleted
+    await pool.query(`DELETE FROM hunts WHERE hunt_id = $1`, [huntId])
   }
 
   async addAnimalToHunt(huntId, animalSpecies) {

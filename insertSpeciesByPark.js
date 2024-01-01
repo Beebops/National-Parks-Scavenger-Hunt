@@ -29,7 +29,7 @@ async function insertAnimalData(parkCode, animalCategory) {
 
 ;(async () => {
   try {
-    await insertAnimalData('acad', 'reptiles')
+    await insertAnimalData('zion', 'fish')
     console.log('Data insertion complete.')
   } catch (err) {
     'Error during data insertion', err

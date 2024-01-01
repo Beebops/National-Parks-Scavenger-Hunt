@@ -1,9 +1,10 @@
 const express = require('express')
 const ExpressError = require('../../expressError')
 const authenticateJWT = require('../../middleware/authMiddleware')
+const huntsRoute = require('./hunts/index')
 const router = express.Router()
 
-module.exports = (userService) => {
+module.exports = (userService, huntsService) => {
   // Get all users
   router.get('/', async (req, res, next) => {
     try {
@@ -74,6 +75,8 @@ module.exports = (userService) => {
       next(err)
     }
   })
+
+  router.use('/:userId/hunts', huntsRoute(huntsService))
 
   return router
 }

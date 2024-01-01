@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 
-const huntsRoute = require('./hunts')
 const usersRoute = require('./users')
 const parksRoute = require('./parks')
 
@@ -10,8 +9,7 @@ module.exports = (params) => {
     res.send('National Park Home Page')
   })
 
-  router.use('/hunts', huntsRoute(params.huntsService))
-  router.use('/users', usersRoute(params.userService))
+  router.use('/users', usersRoute(params.userService, params.huntsService))
   router.use('/parks', parksRoute(params.parkService))
 
   return router
