@@ -3,7 +3,7 @@ const router = express.Router()
 
 const huntsRoute = require('./hunts')
 const usersRoute = require('./users')
-const nationalParkAPIRoute = require('./national-park-api')
+const parksRoute = require('./parks')
 
 module.exports = (params) => {
   router.get('/', (req, res) => {
@@ -12,7 +12,7 @@ module.exports = (params) => {
 
   router.use('/hunts', huntsRoute(params.huntsService))
   router.use('/users', usersRoute(params.userService))
-  router.use('/nps-api', nationalParkAPIRoute(params.nationalParkAPIService))
+  router.use('/parks', parksRoute(params.parkService))
 
   return router
 }
