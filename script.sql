@@ -17,6 +17,7 @@ CREATE TABLE parks (
   park_state VARCHAR(50) NOT NULL,
   park_description TEXT,
   park_image TEXT
+  park_url VARCHAR(255)
 );
 
 CREATE TABLE hunts (
