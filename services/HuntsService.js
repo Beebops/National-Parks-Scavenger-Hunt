@@ -2,13 +2,14 @@ const pool = require('../db')
 const ExpressError = require('../expressError')
 
 class HuntsService {
-  async createHunt({ userId, parkId, huntTitle, selectedSpeciesIds }) {
+  async createHunt(userId, { parkId, huntTitle, selectedSpeciesIds }) {
     const result = await pool.query(
       `INSERT INTO hunts (user_id, park_id, hunt_title, is_complete, date_started, date_completed)
       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
       [userId, parkId, huntTitle, false, new Date(), null]
     )
     const newHuntId = result.rows[0].hunt_id
+    if (!newHuntId) throw new ExpressError('Could not create hunt', 400)
     // associate the selected species with the new hunt
     for (const speciesId of selectedSpeciesIds) {
       await pool.query(
@@ -22,8 +23,13 @@ class HuntsService {
 
   async getHuntsByUser(userId) {
     // returns an array of hunt objects
-
-    return `Getting all of users's scavenger hunts`
+    const result = await pool.query(`SELECT * FROM hunts WHERE user_id = $1`, [
+      userId,
+    ])
+    if (result.rows.length === 0)
+      throw new ExpressError('Scavenger hunts not found', 404)
+    console.log('Scavenger Hunts:', result.rows)
+    return result.rows
   }
 
   async getHuntById(huntId) {

@@ -2,11 +2,19 @@ const express = require('express')
 const router = express.Router({ mergeParams: true })
 
 module.exports = (huntsService) => {
-  // Create a new hunt for given user
+  // Create a new hunt
   router.post('/', async (req, res, next) => {
     try {
       const newHunt = await huntsService.createHunt(req.params.userId, req.body)
       res.status(201).json(newHunt)
+    } catch (err) {
+      next(err)
+    }
+  })
+
+  // Delete a hunt
+  router.delete('/:huntId', async (req, res, next) => {
+    try {
     } catch (err) {
       next(err)
     }
