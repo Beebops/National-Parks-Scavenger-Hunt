@@ -17,7 +17,6 @@ class HuntsService {
         [newHuntId, speciesId]
       )
     }
-    console.log(result.rows[0])
     return result.rows[0]
   }
 
@@ -34,6 +33,12 @@ class HuntsService {
 
   async getHuntById(huntId) {
     // returns the specific hunt object
+    const result = await pool.query(`SELECT * FROM hunts WHERE hunt_id = $1`, [
+      huntId,
+    ])
+    if (result.rows.length === 0)
+      throw new ExpressError('Could not find that scanvenger hunt', 404)
+    return result.rows[0]
   }
 
   async updateHunt(huntId, huntData) {

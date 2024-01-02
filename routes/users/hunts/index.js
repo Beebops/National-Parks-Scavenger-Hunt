@@ -15,6 +15,8 @@ module.exports = (huntsService) => {
   // Delete a hunt
   router.delete('/:huntId', async (req, res, next) => {
     try {
+      await huntsService.deleteHunt(huntId)
+      res.status(204).send()
     } catch (err) {
       next(err)
     }
@@ -24,7 +26,18 @@ module.exports = (huntsService) => {
   router.get('/', async (req, res, next) => {
     try {
       const hunts = await huntsService.getHuntsByUser(req.params.userId)
-      return res.send(hunts)
+      res.json(hunts)
+    } catch (err) {
+      next(err)
+    }
+  })
+
+  // Get a single hunt
+  router.get('/:huntId', async (req, res, next) => {
+    try {
+      const huntId = req.params.huntId
+      const hunt = await huntsService.getHuntById(huntId)
+      res.json(hunt)
     } catch (err) {
       next(err)
     }
