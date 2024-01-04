@@ -45,6 +45,6 @@ CREATE TABLE hunts_species (
   hunt_id INT,
   species_id INT,
   PRIMARY KEY (hunt_id, species_id),
-  FOREIGN KEY (hunt_id) REFERENCES hunts(hunt_id),
+  FOREIGN KEY (hunt_id) REFERENCES hunts(hunt_id) ON DELETE CASCADE;
   FOREIGN KEY (species_id) REFERENCES species(species_id)
 );

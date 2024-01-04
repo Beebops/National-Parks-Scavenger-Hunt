@@ -69,8 +69,8 @@ module.exports = (userService, huntsService) => {
   // Delete user
   router.delete('/:userId', async (req, res, next) => {
     try {
-      await userService.deleteUser(req.params.userId)
-      res.status(204).send()
+      const message = await userService.deleteUser(req.params.userId)
+      res.status(200).json({ message })
     } catch (err) {
       next(err)
     }

@@ -14,9 +14,10 @@ module.exports = (huntsService) => {
 
   // Delete a hunt
   router.delete('/:huntId', async (req, res, next) => {
+    const huntId = req.params.huntId
     try {
-      await huntsService.deleteHunt(huntId)
-      res.status(204).send()
+      const message = await huntsService.deleteHunt(huntId)
+      res.status(200).json({ message })
     } catch (err) {
       next(err)
     }
@@ -41,6 +42,12 @@ module.exports = (huntsService) => {
     } catch (err) {
       next(err)
     }
+  })
+
+  // Add animal species to a hunt
+  router.post('/:huntId', async (req, res, next) => {
+    const huntId = req.params.huntId
+    //
   })
 
   return router

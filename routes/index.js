@@ -5,6 +5,7 @@ const usersRoute = require('./users')
 const parksRoute = require('./parks')
 
 module.exports = (params) => {
+  // Gets all scavenger hunts of logged in user
   router.get('/', (req, res) => {
     res.send('National Park Home Page')
   })

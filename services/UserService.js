@@ -79,7 +79,11 @@ class UserService {
   }
 
   async deleteUser(userId) {
-    await pool.query(`DELETE FROM users WHERE user_id = $1`, [userId])
+    const result = await pool.query(`DELETE FROM users WHERE user_id = $1`, [
+      userId,
+    ])
+    if (result.rowCount === 0) throw new ExpressError('User not found', 404)
+    return 'User successfully deleted'
   }
 }
 
