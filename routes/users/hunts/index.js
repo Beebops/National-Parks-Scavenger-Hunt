@@ -44,10 +44,28 @@ module.exports = (huntsService) => {
     }
   })
 
-  // Add animal species to a hunt
-  router.post('/:huntId', async (req, res, next) => {
-    const huntId = req.params.huntId
-    //
+  // Update an existing hunt
+  router.put('/:huntId', async (req, res, next) => {
+    try {
+      const { huntId } = req.params
+      const updateData = req.body // Contains huntTitle, isComplete, and newSpeciesIds
+      const updatedHunt = await huntsService.updateHunt(huntId, updateData)
+      res.status(200).json(updatedHunt)
+    } catch (err) {
+      next(err)
+    }
+  })
+
+  // Add a species to an existing hunt
+  router.post('/:huntId/species', async (req, res, next) => {
+    try {
+      const { huntId } = req.params
+      const { speciesId } = req.body
+      await huntsService.addSpeciesToHunt(huntId, speciesId)
+      res.status(200).json({ message: 'Species successfully added' })
+    } catch (err) {
+      next(err)
+    }
   })
 
   return router

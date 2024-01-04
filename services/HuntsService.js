@@ -1,3 +1,4 @@
+const { TokenExpiredError } = require('jsonwebtoken')
 const pool = require('../db')
 const ExpressError = require('../expressError')
 
@@ -60,30 +61,49 @@ class HuntsService {
     }
   }
 
-  async updateHunt(huntId, updateData) {
-    // returns the updated hunt object {huntTitle, isComplete, dateCompleted, animalSpeciesList}
-    const entries = Object.entries(updateData)
+  async updateHunt(huntId, { huntTitle, isComplete, newSpeciesIds = [] }) {
+    // update hunt details if provided
+    const updates = []
+    const values = []
+    let valueIndex = 1
 
-    const updates = entries
-      .map(([key, value], index) => `${key} = $${index + 1}`)
-      .join(', ')
+    if (huntTitle !== undefined) {
+      updates.push(`hunt_title = $${valueIndex}`)
+      values.push(huntTitle)
+      valueIndex++
+    }
 
-    const values = entries.map(([key, value]) => value)
+    if (isComplete !== undefined) {
+      updates.push(`is_complete = $${valueIndex}`)
+      values.push(isComplete)
+      valueIndex++
+    }
 
-    if (!updates) throw new ExpressError('No update data provided', 400)
+    if (updates.length === 0 && newSpeciesIds.length === 0) {
+      throw new ExpressError('No updates provided', 400)
+    }
 
     try {
-      const result = await pool.query(
-        `UPDATE hunts SET ${updates} WHERE hunt_id = $${
-          entries.length + 1
-        } RETURNING *`,
-        [...values, huntId]
-      )
-      if (result.rows.length === 0)
-        throw new ExpressError('Hunt not found', 404)
-      return result.rows[0]
+      if (updates.length > 0) {
+        await pool.query(
+          `UPDATE hunts SET ${updates.join(
+            ', '
+          )} WHERE hunt_id = $${valueIndex} RETURNING *`,
+          [...values, huntId]
+        )
+      }
+
+      // add new species to hunt
+      for (const speciesId of newSpeciesIds) {
+        await this.addSpeciesToHunt(huntId, speciesId)
+      }
+      return this.getHuntById(huntId)
     } catch (err) {
-      throw new ExpressError('Error updating hunt', 500)
+      if (err instanceof ExpressError) {
+        throw err
+      } else {
+        throw new ExpressError('Error updating hunt', 500)
+      }
     }
   }
 
@@ -97,7 +117,7 @@ class HuntsService {
     return 'Hunt successfully deleted'
   }
 
-  async addAnimalToHunt(huntId, speciesId) {
+  async addSpeciesToHunt(huntId, speciesId) {
     // To add a species to a hunt, call addAnimalToHunt with the appropriate huntId and speciesId
     try {
       const result = await pool.query(
@@ -116,9 +136,18 @@ class HuntsService {
     }
   }
 
-  async removeAnimalFromHunt(huntId, animalSpecies) {
-    // returns an updated list of animals in hunt
-    // get the animal by using speciesId from hunts_species table
+  async removeSpeciesFromHunt(huntId, speciesId) {
+    try {
+      const result = await pool.query(
+        `DELETE FROM hunts_species WHERE hunt_id = $1 AND species_id = $2`,
+        [huntId, speciesId]
+      )
+      if (result.rowCount === 0)
+        throw new ExpressError('Species not found in this hunt', 404)
+      return 'Species successfully removed from hunt'
+    } catch (err) {
+      throw new ExpressError('Error removing species from hunt', 500)
+    }
   }
 
   async getHuntDetails(huntId) {
