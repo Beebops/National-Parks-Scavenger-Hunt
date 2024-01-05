@@ -152,6 +152,23 @@ class HuntsService {
 
   async getHuntDetails(huntId) {
     // returns a hunt object {huntTitle, isComplete, dateStarted, dateCompleted, animalSpeciesList, parkImage}
+    try {
+      // get hunt and park information
+      const huntResult = await pool.query(
+        `SELECT h.*, p.park_image FROM hunts h JOIN parks p ON h.park_id = p.park_id WHERE h.hunt_id = $1`,
+        [huntId]
+      )
+      if (huntResult.rows.length === 0)
+        throw new ExpressError('Hunt not found', 404)
+      const hunt = huntResult.rows[0]
+      // get species associated with hunt
+      const speciesResult = await pool.query(
+        `SELECT s.* FROM species s JOIN hunts_species hs ON s.species_id = hs.species_id WHERE hs.hunt_id = $1`,
+        [huntId]
+      )
+      hunt.speciesList = speciesResult.rows
+      return hunt
+    } catch (err) {}
   }
 }
 

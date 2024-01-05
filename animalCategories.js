@@ -1,3 +1,3 @@
-const animalCategories = ['mammals', 'birds', 'reptiles', 'amphibians', 'fish']
+const animalCategories = ['Mammal', 'Bird', 'Reptile', 'Amphibian', 'Fish']
 
 module.exports = animalCategories

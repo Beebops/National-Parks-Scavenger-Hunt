@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const speciesRoutes = require('./species')
+//const SpeciesService = require('../../services/SpeciesService')
 
 module.exports = (parkService) => {
   router.get('/', async (req, res) => {
@@ -10,6 +12,8 @@ module.exports = (parkService) => {
       return next(err)
     }
   })
+
+  router.use('./:parkId/species', speciesRoutes(SpeciesService))
 
   return router
 }

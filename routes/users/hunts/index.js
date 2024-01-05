@@ -33,12 +33,13 @@ module.exports = (huntsService) => {
     }
   })
 
-  // Get a single hunt
+  // Get a single hunt with all information
   router.get('/:huntId', async (req, res, next) => {
     try {
       const huntId = req.params.huntId
-      const hunt = await huntsService.getHuntById(huntId)
-      res.json(hunt)
+      const huntDetails = await huntsService.getHuntDetails(huntId)
+
+      res.json(huntDetails)
     } catch (err) {
       next(err)
     }
@@ -63,6 +64,18 @@ module.exports = (huntsService) => {
       const { speciesId } = req.body
       await huntsService.addSpeciesToHunt(huntId, speciesId)
       res.status(200).json({ message: 'Species successfully added' })
+    } catch (err) {
+      next(err)
+    }
+  })
+
+  // Remove a species from an existing hunt
+  router.delete('/:huntId/species', async (req, res, next) => {
+    try {
+      const huntId = req.params.huntId
+      const { speciesId } = req.body
+      await huntsService.removeSpeciesFromHunt(huntId, speciesId)
+      res.status(200).json({ message: 'Species successfully removed' })
     } catch (err) {
       next(err)
     }

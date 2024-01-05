@@ -3,29 +3,32 @@ const axios = require('axios')
 
 GOOGLE_API_KEY = process.env.GOOGLE_API_KEY
 GOOGLE_BASE_URL = `https://kgsearch.googleapis.com/v1/entities:search?indent=true&limit=1&key=`
-IRM_BASE_URL = 'https://irmaservices.nps.gov/v3/rest/npspecies/fulllist/'
 
 async function getSpeciesIRMAData(parkCode, category) {
-  // return a partial species obj { scientificName, commonNames }
   try {
-    const response = await axios.get(`${IRM_BASE_URL}/${parkCode}/${category}`)
-    const speciesData = response.data
-    const allSpeciesByCategory = speciesData.map((species) => ({
-      scientificName: species.ScientificName,
-      commonNames: species.CommonNames,
-    }))
+    const response = await axios.get(
+      `https://irmaservices.nps.gov/v3/rest/npspecies/checklist/${parkCode}/${encodeURIComponent(
+        category
+      )}`
+    )
 
-    return allSpeciesByCategory
+    const speciesItems = response.data
+
+    return speciesItems.map((item) => ({
+      scientificName: item.ScientificName,
+      commonNames: item.CommonNames,
+      category: item.Category,
+    }))
   } catch (e) {
     console.error(e)
-    return {}
+    return []
   }
 }
 
 async function getSpeciesGoogleKGData(species) {
   try {
     const response = await axios.get(
-      `${GOOGLE_BASE_URL}${GOOGLE_API_KEY}&query=${species}`
+      `${GOOGLE_BASE_URL}${GOOGLE_API_KEY}&query=${encodeURIComponent(species)}`
     )
 
     if (
@@ -47,7 +50,7 @@ async function getSpeciesGoogleKGData(species) {
     const imageUrl = result.image.url || ''
     const description = result.detailedDescription.articleBody || ''
     const wikiLink = result.detailedDescription.url || ''
-    //console.log({ imageUrl, description, wikiLink })
+
     return { imageUrl, description, wikiLink }
   } catch (e) {
     console.error(`Error in getSpeciesGoogleKGData for species ${species}:`, e)
@@ -62,13 +65,14 @@ async function combineSpeciesData(parkCode, category) {
 
     for (let species of speciesArray) {
       try {
-        let googleData = await getSpeciesGoogleKGData(species.commonNames)
+        let googleData = await getSpeciesGoogleKGData(species.scientificName)
         let combinedSpeciesData = {
           scientific_name: species.scientificName,
           common_names: species.commonNames,
-          image_url: googleData.imageUrl,
-          description: googleData.description,
-          wiki_link: googleData.wikiLink,
+          category: species.category,
+          image_url: googleData.imageUrl || '',
+          description: googleData.description || '',
+          wiki_link: googleData.wikiLink || '',
         }
 
         combinedSpeciesDataArray.push(combinedSpeciesData)
@@ -86,8 +90,4 @@ async function combineSpeciesData(parkCode, category) {
   }
 }
 
-module.exports = {
-  combineSpeciesData,
-  getSpeciesIRMAData,
-  getSpeciesGoogleKGData,
-}
+module.exports = combineSpeciesData

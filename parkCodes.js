@@ -3,9 +3,10 @@ const parkCodes = [
   'arch', // done
   'badl',
   'bibe',
-  'bisc',
+  'bisc', // done
   'blca',
   'brcacany',
+  'cany', //done
   'care',
   'cave',
   'chis',
@@ -13,6 +14,7 @@ const parkCodes = [
   'crla',
   'cuva',
   'deva',
+  'dena', // need to add to parks
   'drto',
   'ever',
   'jeff',
@@ -22,12 +24,12 @@ const parkCodes = [
   'grba',
   'grsm',
   'gumo',
-  'hale',
+  'hale', // done
   'havo',
   'hosp',
   'indu',
   'isro',
-  'jotr',
+  'jotr', // done
   'kefj',
   'kova',
   'lavo',
@@ -43,11 +45,11 @@ const parkCodes = [
   'shen',
   'thro',
   'viis',
-  'voya',
-  'whsa',
-  'wica',
-  'yell',
-  'yose',
+  'voya', // done
+  'whsa', // done
+  'wica', // done
+  'yell', // done
+  'yose', // done
   'zion', // done
 ]
 

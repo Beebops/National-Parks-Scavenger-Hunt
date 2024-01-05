@@ -35,7 +35,7 @@ CREATE TABLE hunts (
 CREATE TABLE species (
   species_id SERIAL PRIMARY KEY,
   scientific_name VARCHAR(100) NOT NULL UNIQUE,
-  common_name VARCHAR(255) NOT NULL,
+  common_name VARCHAR(255),
   species_description TEXT,
   species_image TEXT,
   species_wikipedia_link TEXT
@@ -46,5 +46,13 @@ CREATE TABLE hunts_species (
   species_id INT,
   PRIMARY KEY (hunt_id, species_id),
   FOREIGN KEY (hunt_id) REFERENCES hunts(hunt_id) ON DELETE CASCADE;
+  FOREIGN KEY (species_id) REFERENCES species(species_id)
+);
+
+CREATE TABLE parks_species (
+  park_id VARCHAR(10),
+  species_id INT,
+  PRIMARY KEY (park_id, species_id),
+  FOREIGN KEY (park_id) REFERENCES parks(park_id),
   FOREIGN KEY (species_id) REFERENCES species(species_id)
 );
