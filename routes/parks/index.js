@@ -1,13 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const speciesRoutes = require('./species')
-//const SpeciesService = require('../../services/SpeciesService')
 
 module.exports = (parkService, speciesService) => {
-  router.get('/', async (req, res) => {
+  router.get('/', async (req, res, next) => {
     try {
-      const allParks = await parkService.getAllParks()
-      res.send(allParks)
+      const stateCode = req.query.state
+      const parks = await parkService.getParksByState(stateCode)
+      res.json(parks)
     } catch (err) {
       return next(err)
     }
