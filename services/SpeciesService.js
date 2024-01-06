@@ -4,12 +4,16 @@ const ExpressError = require('../expressError')
 class SpeciesService {
   async getSpeciesByCategoryAndPark(parkId, category) {
     try {
-      const query = `SELECT * FROM species WHERE park_id = $1 AND category = $2`
+      const query = `
+        SELECT s.* FROM species s
+        JOIN parks_species ps ON s.species_id = ps.species_id
+        WHERE ps.park_id = $1 AND s.category = $2
+      `
       const values = [parkId, category]
       const result = await pool.query(query, values)
       return result.rows
     } catch (err) {
-      console.error('Error fetching species', err)
+      console.error('Error fetching species by category and park:', err)
       throw new ExpressError('Error fetching species by category and park', 500)
     }
   }

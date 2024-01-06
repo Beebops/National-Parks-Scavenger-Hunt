@@ -13,7 +13,7 @@ module.exports = (parkService, speciesService) => {
     }
   })
 
-  router.use('./:parkId/species', speciesRoutes(speciesService))
+  router.use('/:parkId/species', speciesRoutes(speciesService))
 
   return router
 }
