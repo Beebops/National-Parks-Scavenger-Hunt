@@ -18,7 +18,12 @@ async function getParksData() {
     const parksData = response.data.data
 
     const parks = parksData
-      .filter((park) => park.designation === 'National Park')
+      .filter(
+        (park) =>
+          park.designation === 'National Park' ||
+          park.designation === 'National Park & Preserve'
+      )
+
       .map((park) => ({
         parkId: park.parkCode,
         parkName: park.fullName,
@@ -41,7 +46,8 @@ async function insertParksData() {
     for (const park of parksData) {
       const query = `INSERT INTO parks
       (park_id, park_name, park_state, park_description, park_image, park_url )
-      VALUES ($1, $2, $3, $4, $5, $6);`
+      VALUES ($1, $2, $3, $4, $5, $6)
+      ON CONFLICT (park_id) DO NOTHING;;`
       const values = [
         park.parkId,
         park.parkName,
