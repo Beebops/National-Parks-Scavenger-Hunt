@@ -28,7 +28,6 @@ module.exports = (userService, huntsService) => {
   // Login User
   router.post('/login', async (req, res, next) => {
     try {
-      console.log(req.body)
       const { username, password } = req.body
       if (!username || !password)
         throw new ExpressError('Username and password are required', 400)
