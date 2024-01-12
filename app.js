@@ -35,7 +35,8 @@ module.exports = (config) => {
   /** 404 handler */
 
   app.use(function (req, res, next) {
-    return new ExpressError('Not Found', 404)
+    const err = new ExpressError('Not Found', 404)
+    res.status(err.status).json({ error: { message: err.message } })
   })
 
   app.use((error, req, res, next) => {

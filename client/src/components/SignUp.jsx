@@ -23,15 +23,16 @@ export default function SignUp() {
       return
     }
     try {
-      const response = await axios.post('/users', {
+      const response = await axios.post('/users/register', {
         username: formData.username,
         email: formData.email,
-        password:formData.password
+        password:formData.password,
+        passwordConfirmation: formData.passwordConfirmation
       })
       console.log(response.data)
-      console.log('Success and being redirected to Home')
+      console.log(formData)
     } catch (err) {
-      console.error('Error registering user')
+      console.error('Error registering user', err.response ? err.response.data : err);
     }
   }
   return (

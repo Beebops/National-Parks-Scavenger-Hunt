@@ -16,7 +16,7 @@ module.exports = (userService, huntsService) => {
   })
 
   // Create a new user
-  router.post('/', async (req, res, next) => {
+  router.post('/register', async (req, res, next) => {
     try {
       const newUser = await userService.createUser(req.body)
       res.status(201).json(newUser)
