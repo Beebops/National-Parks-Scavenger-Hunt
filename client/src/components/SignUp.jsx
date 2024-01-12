@@ -29,8 +29,12 @@ export default function SignUp() {
         password:formData.password,
         passwordConfirmation: formData.passwordConfirmation
       })
-      console.log(response.data)
-      console.log(formData)
+      setFormData({
+        username: '',
+        email: '',
+        password: '',
+        passwordConfirmation: ''
+      })
     } catch (err) {
       console.error('Error registering user', err.response ? err.response.data : err);
     }
