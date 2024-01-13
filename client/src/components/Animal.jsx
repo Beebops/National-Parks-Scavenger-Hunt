@@ -1,10 +1,15 @@
 import {Link} from 'react-router-dom'
-export default function Animal() {
+
+export default function Animal({animal}) {
   return (
-    <div>
-      <h3>Animal Name</h3>
-      <Link to="/animal-details"><p>Details about animal</p></Link>
+    <Link to={`/species/${animal.species_id}`}>
+      <div>
+      <h3>{animal.common_name}</h3>
+      <h4>{animal.scientific_name}</h4>
+     
     </div>
+    </Link>
+    
     
   )
 }

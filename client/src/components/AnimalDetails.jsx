@@ -1,9 +1,35 @@
+import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+import axios from 'axios'
+import '../styles/index.css'
+
 export default function AnimalDetails() {
+  const [speciesData, setSpeciesData] = useState(null)
+  const {speciesId} = useParams()
+  
+  useEffect(() => {
+    const fetchSpeciesData = async () => {
+      try {
+        const response = await axios.get(`/species/${speciesId}`)
+        setSpeciesData(response.data)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    fetchSpeciesData()
+  }, [speciesId])
+
+  if(!speciesData) {
+    return <div>Loading...</div>
+  }
   return (
     <div>
-      <h3>Animal Name</h3>
-      <p>Some info about the animal</p>
-      <p>Link to wikipedia page about the animal</p>
+      <img className="species-card-img" src={speciesData.species_image} alt={speciesData.common_name}></img>
+      <h3>{speciesData.common_name}</h3>
+      <p>{speciesData.species_description}</p>
+      
+      <div><a>{speciesData.species_wikipedia_link}</a></div>
+      
     
     </div>
     

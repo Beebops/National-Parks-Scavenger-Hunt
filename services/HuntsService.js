@@ -23,12 +23,10 @@ class HuntsService {
 
   async getHuntsByUser(userId) {
     // returns an array of hunt objects
-    const result = await pool.query(`SELECT * FROM hunts WHERE user_id = $1`, [
-      userId,
-    ])
-    // if (result.rows.length === 0)
-    //   throw new ExpressError('Scavenger hunts not found', 404)
-
+    const result = await pool.query(
+      `SELECT h.*, p.park_image FROM hunts h JOIN parks p ON h.park_id = p.park_id WHERE h.user_id = $1`,
+      [userId]
+    )
     return result.rows
   }
 

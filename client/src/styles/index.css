@@ -6,3 +6,8 @@
 
   color: white;
 }
+
+.scavenger-hunt-img,
+.species-card-img {
+  width: 100%;
+}
