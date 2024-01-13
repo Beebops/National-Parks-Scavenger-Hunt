@@ -26,8 +26,8 @@ class HuntsService {
     const result = await pool.query(`SELECT * FROM hunts WHERE user_id = $1`, [
       userId,
     ])
-    if (result.rows.length === 0)
-      throw new ExpressError('Scavenger hunts not found', 404)
+    // if (result.rows.length === 0)
+    //   throw new ExpressError('Scavenger hunts not found', 404)
 
     return result.rows
   }

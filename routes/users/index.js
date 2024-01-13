@@ -32,7 +32,13 @@ module.exports = (userService, huntsService) => {
       if (!username || !password)
         throw new ExpressError('Username and password are required', 400)
       const loginResponse = await userService.loginUser(username, password)
-      res.status(200).json(loginResponse)
+
+      res
+        .status(200)
+        .json({
+          token: loginResponse.token,
+          userId: loginResponse.user.user_id,
+        })
     } catch (err) {
       next(err)
     }
