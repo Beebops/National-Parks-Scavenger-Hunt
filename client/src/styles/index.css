@@ -3,11 +3,16 @@
   max-width: 480px;
   margin: auto;
   background-color: #555;
-
   color: white;
 }
 
 .scavenger-hunt-img,
 .species-card-img {
   width: 100%;
+}
+
+select,
+option {
+  color: black;
+  background-color: white;
 }

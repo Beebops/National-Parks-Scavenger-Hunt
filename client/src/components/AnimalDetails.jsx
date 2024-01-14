@@ -28,7 +28,7 @@ export default function AnimalDetails() {
       <h3>{speciesData.common_name}</h3>
       <p>{speciesData.species_description}</p>
       
-      <div><a>{speciesData.species_wikipedia_link}</a></div>
+      <div><a href={speciesData.species_wikipedia_link}>Learn more about the {speciesData.common_name}</a></div>
       
     
     </div>
