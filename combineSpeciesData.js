@@ -47,7 +47,7 @@ async function getSpeciesGoogleKGData(species) {
       return { imageUrl: '', description: '', wikiLink: '' }
     }
 
-    const imageUrl = result.image.url || ''
+    const imageUrl = result.image.contentUrl || ''
     const description = result.detailedDescription.articleBody || ''
     const wikiLink = result.detailedDescription.url || ''
 

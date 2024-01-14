@@ -14,7 +14,7 @@ const parkCodes = [
   'crla',
   'cuva',
   'deva',
-  'dena', // need to add to parks
+  'dena',
   'drto',
   'ever',
   'jeff',
@@ -45,11 +45,11 @@ const parkCodes = [
   'shen',
   'thro',
   'viis',
-  'voya', // done
-  'whsa', // done
-  'wica', // done
-  'yell', // done
-  'yose', // done
+  'voya',
+  'whsa',
+  'wica',
+  'yell',
+  'yose',
   'zion', // done
 ]
 

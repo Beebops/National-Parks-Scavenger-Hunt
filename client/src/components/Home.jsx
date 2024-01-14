@@ -39,12 +39,15 @@ export default function Home() {
   if(loading) return <div>Loading...</div>
   if(error) return <div>Error loading data</div>
 
+  const completedHunts = userData?.hunts?.filter(hunt => hunt.is_complete) || 0 
+  const inProgressHunts = userData?.hunts?.length - completedHunts.length
+  
   return (
     <>
-      <h2>{userData?.username}'s Home Page</h2>
+      <h2>Welcome, {userData?.username}!</h2>
           {userData?.hunts && userData.hunts.length > 0 ? (
             <>
-              <p>You have {userData.hunts.length} hunts</p>
+              <p>You have {inProgressHunts} scavenger hunts in progress and {completedHunts.length} completed</p>
               <ScavengerHuntList hunts={userData.hunts} />
             </>
           ) : (
