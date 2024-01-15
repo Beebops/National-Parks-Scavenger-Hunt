@@ -32,42 +32,39 @@ export default function SpeciesSelector() {
   
   const handleSpeciesSelect = (category, selectedIds) => {
     setSelectedSpecies(prev => {
-      // Create a set for the IDs for easier addition/removal
-      const selectedSet = new Set(prev[category].map(s => s.speciesId));
+      // Map current selection to a lookup object with speciesId as key
+      const currentSelectionMap = prev[category].reduce((acc, item) => {
+        acc[item.speciesId.toString()] = item;
+        return acc;
+      }, {});
   
-      // Update the set based on the latest selection
+      // Add new selections and remove deselections
       selectedIds.forEach(id => {
-        // If the ID is already in the set, remove it (deselecting)
-        if (selectedSet.has(id)) {
-          selectedSet.delete(id);
+        if (currentSelectionMap[id]) {
+          // If already selected, remove it (deselection)
+          delete currentSelectionMap[id];
         } else {
-          // If the ID is not in the set, add it (selecting)
-          selectedSet.add(id);
+          // If not selected, add it (selection)
+          const speciesObj = species[category].find(species => species.species_id.toString() === id);
+          if (speciesObj) {
+            currentSelectionMap[id] = {
+              speciesId: speciesObj.species_id,
+              commonName: speciesObj.common_name,
+              scientificName: speciesObj.scientific_name
+            };
+          }
         }
       });
   
-      // Map the updated set of IDs back to the species objects
-      const updatedSelection = Array.from(selectedSet).map(id => {
-        const speciesObj = species[category].find(species => species.species_id === parseInt(id));
-        return speciesObj ? {
-          speciesId: speciesObj.species_id,
-          commonName: speciesObj.common_name,
-          scientificName: speciesObj.scientific_name
-        } : null;
-      }).filter(item => item !== null);
-  
-      // Update the state with the new selection
+      // Convert the lookup object back to an array
       return {
         ...prev,
-        [category]: updatedSelection
+        [category]: Object.values(currentSelectionMap)
       };
     });
   };
   
-  
-  
-  
-  
+  console.log(selectedSpecies)
   return (
     <div>
       <label htmlFor="new-hunt-title">Title your scavenger hunt</label>
@@ -84,28 +81,6 @@ export default function SpeciesSelector() {
   );
 }
 
-
-
-
-// const handleSpeciesSelect = (category, selectedOptions) => {
-//   setSelectedSpecies(prev => {
-//     const currentSelection = prev[category] || [];
-
-//     const newSelection = selectedOptions.reduce((acc, option) => {
-//       const speciesObj = species[category].find(species => species.species_id === option.value);
-//       if (acc.find(item => item.species_id === speciesObj.species_id)) {
-//         return acc.filter(item => item.species_id !== speciesObj.species_id);
-//       } else {
-//         return [...acc, speciesObj];
-//       }
-//     }, currentSelection);
-
-//     return {
-//       ...prev,
-//       [category]: newSelection
-//     };
-//   });
-// };
 
 
 
