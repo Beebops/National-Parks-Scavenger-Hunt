@@ -1,7 +1,7 @@
 import ParkCard from "./ParkCard"
 
 export default function ParkList({parks}) {
-  console.log(parks)
+  
   return (
     <div>
       <h3>Choose a park</h3>

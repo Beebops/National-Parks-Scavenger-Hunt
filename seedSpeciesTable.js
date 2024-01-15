@@ -40,6 +40,6 @@ async function seedSpeciesTable(parkCode, categories) {
 }
 
 // Example usage
-const parkCode = 'cany'
+const parkCode = 'brca'
 const categories = ['Mammal', 'Bird', 'Reptile', 'Amphibian', 'Fish']
 seedSpeciesTable(parkCode, categories)

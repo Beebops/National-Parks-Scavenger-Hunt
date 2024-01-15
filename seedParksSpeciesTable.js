@@ -55,4 +55,4 @@ async function seedParksSpeciesTable(parkCode, categories) {
   }
 }
 
-seedParksSpeciesTable('cany', animalCategories)
+seedParksSpeciesTable('brca', animalCategories)

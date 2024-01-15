@@ -1,11 +1,11 @@
 const parkCodes = [
   'acad', // done
   'arch', // done
-  'badl',
-  'bibe',
+  'badl', // done
+  'bibe', // done
   'bisc', // done
-  'blca',
-  'brcacany',
+  'blca', // done
+  'brca', // done
   'cany', //done
   'care',
   'cave',
@@ -24,12 +24,12 @@ const parkCodes = [
   'grba',
   'grsm',
   'gumo',
-  'hale', // done
+  'hale', //
   'havo',
   'hosp',
   'indu',
   'isro',
-  'jotr', // done
+  'jotr', //
   'kefj',
   'kova',
   'lavo',

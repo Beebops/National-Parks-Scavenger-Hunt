@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react"
-import axios from 'axios'
+export default function CategorySelect({category, speciesList, onSpeciesSelect}) {
 
-export default function CategorySelect({speciesList}) {
-  const [selectedSpecies, setSelectedSpecies] = useState([])
+  const handleChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions);
+    const selectedIds = selectedOptions.map(option => option.value);
+    onSpeciesSelect(category, selectedIds);
+  };
   
+    
   return (
     <div>
-      <select name="" id="">
-        <option value="">Select</option>
-        {speciesList.map((species, index) => (
-          <option key={index} value={species.species_id}>
-            {species.common_name}
-          </option>
+      <select multiple onChange={handleChange} >
+        <option value="">Select {category}</option>
+        {speciesList.map(species => (
+          <option key={species.species_id} value={species.species_id}>{species.common_name.split(',')[0]}</option>
         ))}
       </select>
     </div>
@@ -19,12 +20,3 @@ export default function CategorySelect({speciesList}) {
    
 }
 
-// {
-// 	"hunt_id": 5,
-// 	"user_id": 5,
-// 	"park_id": "zion",
-// 	"hunt_title": "Zion Adventures",
-// 	"is_complete": false,
-// 	"date_started": "2024-01-04T05:00:00.000Z",
-// 	"date_completed": null
-// }
