@@ -6,11 +6,18 @@ import SelectedSpeciesList from './SelectedSpeciesList';
 
 export default function SpeciesSelector() {
   const {parkId} = useParams()
+  const [huntTitle, setHuntTitle] = useState('')
   const [species, setSpecies] = useState({mammals: [], birds: [], reptiles: [], amphibians: [], fish: []})
   const [selectedSpecies, setSelectedSpecies] = useState({mammals: [], birds: [], reptiles: [], amphibians: [], fish: []})
 
+  const handleChange = e => {
+    console.log(e.target.value)
+    setHuntTitle(e.target.value)
+  }
+
   const userId = localStorage.getItem('userId');
 
+  // selectedSpecies {mammals: [{speciesId: 7662, commonName: 'Moose', scientificName: 'Alces alces'}], birds: [{speciesId: 7355, commonName: "Cooper's Hawk", scientificName: 'Accipiter cooperii'}], reptiles: [], amphibians: [], fish: []}
   
   useEffect(() => {
     const fetchSpecies = async () => {
@@ -64,11 +71,10 @@ export default function SpeciesSelector() {
     });
   };
   
-  console.log(selectedSpecies)
   return (
     <div>
       <label htmlFor="new-hunt-title">Title your scavenger hunt</label>
-      <input id="new-hunt-title" type="text" />
+      <input id="new-hunt-title" type="text" name="new-hunt-title" value={huntTitle} onChange={handleChange} />
       <CategorySelect category="mammals" onSpeciesSelect={handleSpeciesSelect} speciesList={species.mammals} />
       <CategorySelect category="birds" onSpeciesSelect={handleSpeciesSelect} speciesList={species.birds} />
       <CategorySelect category="reptiles" onSpeciesSelect={handleSpeciesSelect} speciesList={species.reptiles} />
