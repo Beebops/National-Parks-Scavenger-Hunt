@@ -4,7 +4,7 @@ import Footer from './components/Footer'
 import LandingPage from './components/LandingPage'
 import NewScavengerHunt from './components/NewScavengerHunt'
 import ScavengerHunt from './components/ScavengerHunt'
-import ScavengerHuntCard from './components/ScavengerHuntCard'
+import SpeciesSelector from './components/SpeciesSelector'
 import Nav from './components/Nav'
 import AnimalDetails from './components/AnimalDetails'
 
@@ -22,6 +22,10 @@ function App() {
             element={<ScavengerHunt />}
           />
           <Route path='/species/:speciesId' element={<AnimalDetails />} />
+          <Route
+            path='/parks/:parkId/select-species'
+            element={<SpeciesSelector />}
+          />
         </Routes>
 
         <Footer />

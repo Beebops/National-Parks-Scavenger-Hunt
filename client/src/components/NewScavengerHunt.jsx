@@ -1,5 +1,5 @@
 import StateDropDown from "./StateDropDown"
-import ParkForm from "./ParkForm"
+import ParkList from "./ParkList"
 import AnimalForm from "./AnimalForm"
 import AnimalList from "./AnimalList"
 
@@ -8,7 +8,7 @@ export default function NewScavengerHunt() {
     <div>
       <h3>New Scavenger Hunt Form</h3>
     <StateDropDown />
-    {/* <ParkForm />
+    {/* <ParkList />
     <AnimalForm />
     <AnimalList /> */}
     </div>
