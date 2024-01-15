@@ -1,6 +1,7 @@
 import {useParams} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
+import CategorySelect from './CategorySelect'
 
 export default function SpeciesSelector() {
   const {parkId} = useParams()
@@ -26,7 +27,11 @@ export default function SpeciesSelector() {
   console.log(species)
   return (
     <div>
-
+      <CategorySelect speciesList={species.mammals} />
+      <CategorySelect speciesList={species.birds} />
+      <CategorySelect speciesList={species.reptiles} />
+      <CategorySelect speciesList={species.amphibians}/>
+      <CategorySelect speciesList={species.fish} />
     </div>
   )
 }
