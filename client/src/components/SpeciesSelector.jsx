@@ -1,24 +1,74 @@
-import {useParams} from 'react-router-dom'
+import {useParams, useNavigate} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
 import CategorySelect from './CategorySelect'
 import SelectedSpeciesList from './SelectedSpeciesList';
 
 export default function SpeciesSelector() {
+  const navigate = useNavigate()
   const {parkId} = useParams()
   const [huntTitle, setHuntTitle] = useState('')
   const [species, setSpecies] = useState({mammals: [], birds: [], reptiles: [], amphibians: [], fish: []})
   const [selectedSpecies, setSelectedSpecies] = useState({mammals: [], birds: [], reptiles: [], amphibians: [], fish: []})
 
   const handleChange = e => {
-    console.log(e.target.value)
     setHuntTitle(e.target.value)
   }
 
-  const userId = localStorage.getItem('userId');
+  
 
   // selectedSpecies {mammals: [{speciesId: 7662, commonName: 'Moose', scientificName: 'Alces alces'}], birds: [{speciesId: 7355, commonName: "Cooper's Hawk", scientificName: 'Accipiter cooperii'}], reptiles: [], amphibians: [], fish: []}
+
+  // JSON to send to '/users/:userId/hunts ---> 
+// {  
+// 	"userId": 5,
+// 	"parkId": "zion",
+// 	"huntTitle": ${huntTitle},
+// 	"selectedSpeciesIds": []
+// }
+
+
+  // make a post request to this resource: /users/:userId/hunts
+  // in the request body send as JSON {"userId": 5, "parkId": ${parkId}, "huntTitle": ${huntTitle}, 	"selectedSpeciesIds": ${speciesIds}}
+  // redirect to Home, which should now display the new Hunt
+
+  // if new hunt was not created display an error message to user
+const handleSubmit = async e => {
+  e.preventDefault()
+  if (!huntTitle) {
+    alert('Please enter a title for your scavenger hunt')
+      return
+  }
+
+  const userId = localStorage.getItem('userId')
+  const token = localStorage.getItem('token');
+
+  // create an array off speciesIds from selectedSpecies
+  const speciesIds = Object.values(selectedSpecies)
+      .flatMap(category => category.map(species => species.speciesId)
+    )
+
+    const newHuntData = {
+      userId: parseInt(userId),
+      parkId: parkId,
+      huntTitle: huntTitle,
+      selectedSpeciesIds: speciesIds
+    }
+    
+  try {
+    const response = await axios.post(`/users/${userId}/hunts`, newHuntData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    } )
+    console.log('New hunt creted', response.data)
   
+    navigate('/home')
+  } catch (err) {
+    console.log('Error creating hunt: ', err)
+  }
+}
+
   useEffect(() => {
     const fetchSpecies = async () => {
     const categories = ['mammals', 'birds', 'reptiles', 'amphibians', 'fish']
@@ -72,7 +122,7 @@ export default function SpeciesSelector() {
   };
   
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <label htmlFor="new-hunt-title">Title your scavenger hunt</label>
       <input id="new-hunt-title" type="text" name="new-hunt-title" value={huntTitle} onChange={handleChange} />
       <CategorySelect category="mammals" onSpeciesSelect={handleSpeciesSelect} speciesList={species.mammals} />
@@ -83,8 +133,8 @@ export default function SpeciesSelector() {
       <SelectedSpeciesList selectedSpecies={selectedSpecies} />
       <button>Create Hunt</button>
 
-    </div>
-  );
+    </form>
+  )
 }
 
 
