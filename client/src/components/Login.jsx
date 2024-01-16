@@ -26,6 +26,10 @@ export default function Login() {
       navigate('/home')
     } catch (err) {
       console.error('Error loggin in', err.response ? err.response.data : err)
+      console.log(err)
+      alert(err.response && err.response.data && err.response.data.error 
+        ? err.response.data.error.message
+        : "An error occurred during login.")
     }
   }
 

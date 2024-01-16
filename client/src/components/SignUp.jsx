@@ -37,6 +37,9 @@ export default function SignUp() {
       })
     } catch (err) {
       console.error('Error registering user', err.response ? err.response.data : err);
+      alert(err.response && err.response.data && err.response.data.error 
+        ? err.response.data.error.message
+        : "An error occurred during login.")
     }
   }
   return (
