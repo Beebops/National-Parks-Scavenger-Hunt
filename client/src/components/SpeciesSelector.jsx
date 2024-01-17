@@ -15,24 +15,6 @@ export default function SpeciesSelector() {
     setHuntTitle(e.target.value)
   }
 
-  
-
-  // selectedSpecies {mammals: [{speciesId: 7662, commonName: 'Moose', scientificName: 'Alces alces'}], birds: [{speciesId: 7355, commonName: "Cooper's Hawk", scientificName: 'Accipiter cooperii'}], reptiles: [], amphibians: [], fish: []}
-
-  // JSON to send to '/users/:userId/hunts ---> 
-// {  
-// 	"userId": 5,
-// 	"parkId": "zion",
-// 	"huntTitle": ${huntTitle},
-// 	"selectedSpeciesIds": []
-// }
-
-
-  // make a post request to this resource: /users/:userId/hunts
-  // in the request body send as JSON {"userId": 5, "parkId": ${parkId}, "huntTitle": ${huntTitle}, 	"selectedSpeciesIds": ${speciesIds}}
-  // redirect to Home, which should now display the new Hunt
-
-  // if new hunt was not created display an error message to user
 const handleSubmit = async e => {
   e.preventDefault()
   if (!huntTitle) {

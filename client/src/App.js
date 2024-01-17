@@ -7,6 +7,7 @@ import ScavengerHunt from './components/ScavengerHunt'
 import SpeciesSelector from './components/SpeciesSelector'
 import Nav from './components/Nav'
 import AnimalDetails from './components/AnimalDetails'
+import Login from './components/Login'
 
 function App() {
   return (
@@ -21,7 +22,11 @@ function App() {
             path='/users/:userId/hunts/:huntId'
             element={<ScavengerHunt />}
           />
-          <Route path='/species/:speciesId' element={<AnimalDetails />} />
+          <Route path='/login' element={<Login />} />
+          <Route
+            path='/species/species-details/:speciesId'
+            element={<AnimalDetails />}
+          />
           <Route
             path='/parks/:parkId/select-species'
             element={<SpeciesSelector />}
