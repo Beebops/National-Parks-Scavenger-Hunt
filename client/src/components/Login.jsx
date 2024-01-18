@@ -1,8 +1,11 @@
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
+import { AuthContext } from '../context/AuthContext';
 
 export default function Login() {
+  const { setIsLoggedIn } = useContext(AuthContext);
+
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
@@ -24,6 +27,7 @@ export default function Login() {
       localStorage.setItem('token', response.data.token)
       localStorage.setItem('userId', response.data.userId)
       navigate('/home')
+      setIsLoggedIn(true)
     } catch (err) {
       console.error('Error loggin in', err.response ? err.response.data : err)
       console.log(err)

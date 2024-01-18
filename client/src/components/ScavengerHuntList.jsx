@@ -9,9 +9,9 @@ export default function ScavengerHuntList({hunts}) {
       <ul>
         {hunts.map(hunt => (
           <li key={hunt.hunt_id}>
-            <Link to={`/hunts/${hunt.hunt_id}`}>
+            {/* <Link to={`/hunts/${hunt.hunt_id}`}> */}
               <ScavengerHuntCard hunt={hunt} />
-            </Link>
+            {/* </Link> */}
           </li>
         ))}
       </ul>

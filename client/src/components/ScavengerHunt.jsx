@@ -38,7 +38,7 @@ export default function ScavengerHunt() {
   if(!huntData) {
     return <div>Loading...</div>
   }
-  console.log(huntData.speciesList)
+ 
   return (
     <div>
       <img className="scavenger-hunt-img" src={huntData.park_image} alt={huntData.hunt_title}></img>

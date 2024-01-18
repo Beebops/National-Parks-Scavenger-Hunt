@@ -1,16 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import '../styles/nav.css'
 import ModalLogout from './ModalLogout'
+import { AuthContext } from '../context/AuthContext';
 
 
 
 export default function Nav() {
+  const {isLoggedIn, setIsLoggedIn} = useContext(AuthContext)
   const [menuOpen, setMenuOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  //const [isLoggedIn, setIsLoggedIn] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -38,6 +40,7 @@ export default function Nav() {
     setMenuOpen(!menuOpen)
   }
 
+  console.log('Logged in: ',isLoggedIn)
   return (
     <nav className='nav'>
       <Link to='/' className='active nav-logo'>Logo</Link>

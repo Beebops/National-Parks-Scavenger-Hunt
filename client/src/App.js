@@ -8,34 +8,37 @@ import SpeciesSelector from './components/SpeciesSelector'
 import Nav from './components/Nav'
 import AnimalDetails from './components/AnimalDetails'
 import Login from './components/Login'
+import AuthProvider from './context/AuthContext'
 
 function App() {
   return (
-    <div className='App-container'>
-      <BrowserRouter>
-        <Nav />
-        <Routes>
-          <Route path='/' element={<LandingPage />} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/new-scavenger-hunt' element={<NewScavengerHunt />} />
-          <Route
-            path='/users/:userId/hunts/:huntId'
-            element={<ScavengerHunt />}
-          />
-          <Route path='/login' element={<Login />} />
-          <Route
-            path='/species/species-details/:speciesId'
-            element={<AnimalDetails />}
-          />
-          <Route
-            path='/parks/:parkId/select-species'
-            element={<SpeciesSelector />}
-          />
-        </Routes>
+    <AuthProvider>
+      <div className='App-container'>
+        <BrowserRouter>
+          <Nav />
+          <Routes>
+            <Route path='/' element={<LandingPage />} />
+            <Route path='/home' element={<Home />} />
+            <Route path='/new-scavenger-hunt' element={<NewScavengerHunt />} />
+            <Route
+              path='/users/:userId/hunts/:huntId'
+              element={<ScavengerHunt />}
+            />
+            <Route path='/login' element={<Login />} />
+            <Route
+              path='/species/species-details/:speciesId'
+              element={<AnimalDetails />}
+            />
+            <Route
+              path='/parks/:parkId/select-species'
+              element={<SpeciesSelector />}
+            />
+          </Routes>
 
-        <Footer />
-      </BrowserRouter>
-    </div>
+          <Footer />
+        </BrowserRouter>
+      </div>
+    </AuthProvider>
   )
 }
 
