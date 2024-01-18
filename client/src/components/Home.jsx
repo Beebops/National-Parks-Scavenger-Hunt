@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import ScavengerHuntList from "./ScavengerHuntList"
+import '../styles/home.css'
 
 export default function Home() {
   const [userData, setUserData] = useState(null)
@@ -43,7 +44,7 @@ export default function Home() {
   const inProgressHunts = userData?.hunts?.length - completedHunts.length
   
   return (
-    <>
+    <div className='home-container'>
       <h2>Welcome, {userData?.username}!</h2>
           {userData?.hunts && userData.hunts.length > 0 ? (
             <>
@@ -53,7 +54,7 @@ export default function Home() {
           ) : (
             <p>You currently have no scavenger hunts.</p>
           )}
-        </>
+    </div>
     
   )
 }

@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import AnimalList from "./AnimalList"
 
+import '../styles/scavengerhunt.css'
+
 
 export default function ScavengerHunt() {
   const {userId, huntId} = useParams()
@@ -42,9 +44,16 @@ export default function ScavengerHunt() {
   return (
     <div>
       <img className="scavenger-hunt-img" src={huntData.park_image} alt={huntData.hunt_title}></img>
-      <h2>{huntData.hunt_title}</h2>
-      <p>Date Created: {huntData.date_started}</p>
-      {huntData.date_completed && <p>Completed: {huntData.date_completed}</p>}
+      <h2 className='scavenger-hunt-title'>{huntData.hunt_title}</h2>
+      <button>
+        Delete Hunt
+      </button>
+      <button>
+        Edit Hunt
+      </button>
+      
+      <p className='scavenger-hunt-dates'>Date Created: {huntData.date_started}</p>
+      {huntData.date_completed && <p className='scavenger-hunt-dates'>Completed: {huntData.date_completed}</p>}
       <AnimalList species={huntData.speciesList} />
     </div>
     

@@ -1,0 +1,12 @@
+.scavenger-hunt-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 80%;
+}
+
+.scavenger-hunt-li {
+  width: 300px;
+  background-color: gray;
+  margin: 0.5em;
+}

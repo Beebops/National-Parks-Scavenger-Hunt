@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,400;0,8..144,500;0,8..144,700;1,8..144,200&family=Urbanist:wght@400;700&display=swap');
+
+body {
+  font-family: 'Roboto Serif', serif;
+}
+
 .App-container {
   min-width: 350px;
   max-width: 480px;
@@ -6,13 +12,20 @@
   color: white;
 }
 
-.scavenger-hunt-img,
 .species-card-img {
   width: 100%;
+}
+
+a {
+  text-decoration: none;
 }
 
 select,
 option {
   color: black;
   background-color: white;
+}
+
+ul {
+  list-style-type: none;
 }

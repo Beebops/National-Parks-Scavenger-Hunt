@@ -18,7 +18,7 @@ export default function Nav() {
   useEffect(() => {
     const token = localStorage.getItem('token')
     setIsLoggedIn(!!token)
-  }, [])
+  }, [setIsLoggedIn])
 
   const handleLogout = () => {
     setIsModalOpen(true)
@@ -40,7 +40,6 @@ export default function Nav() {
     setMenuOpen(!menuOpen)
   }
 
-  console.log('Logged in: ',isLoggedIn)
   return (
     <nav className='nav'>
       <Link to='/' className='active nav-logo'>Logo</Link>
