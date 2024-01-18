@@ -1,19 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,400;0,8..144,500;0,8..144,700;1,8..144,200&family=Urbanist:wght@400;700&display=swap');
 
 body {
+  color: #432a1c;
   font-family: 'Roboto Serif', serif;
 }
 
 .App-container {
-  min-width: 350px;
+  min-width: 410px;
   max-width: 480px;
   margin: auto;
-  background-color: #555;
-  color: white;
+  background-color: tan;
 }
 
 .species-card-img {
   width: 100%;
+}
+
+h2,
+h3 {
+  margin: 0;
 }
 
 a {
@@ -28,4 +33,18 @@ option {
 
 ul {
   list-style-type: none;
+}
+
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
 }

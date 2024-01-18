@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faTree } from '@fortawesome/free-solid-svg-icons'
 import '../styles/nav.css'
 import ModalLogout from './ModalLogout'
 import { AuthContext } from '../context/AuthContext';
@@ -12,7 +12,7 @@ export default function Nav() {
   const {isLoggedIn, setIsLoggedIn} = useContext(AuthContext)
   const [menuOpen, setMenuOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  //const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -42,7 +42,9 @@ export default function Nav() {
 
   return (
     <nav className='nav'>
-      <Link to='/' className='active nav-logo'>Logo</Link>
+      <Link to='/' className='active nav-logo'>
+      <FontAwesomeIcon className='tree' icon={faTree} />
+      </Link>
       <div className='nav-links' style={{ display: menuOpen ? 'block' : 'none'}}>
         {isLoggedIn && (
           <>

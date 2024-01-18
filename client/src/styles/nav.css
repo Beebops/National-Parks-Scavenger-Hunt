@@ -1,6 +1,6 @@
 .nav {
   overflow: hidden;
-  background-color: #333;
+  background-color: saddlebrown;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -11,12 +11,21 @@
   display: none;
 }
 
+.tree {
+  font-size: 1.25rem;
+}
+
 .nav-link,
 .nav-logo {
   color: white;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.75rem;
+}
+
+.nav-link:hover,
+.nav-logo:hover {
+  color: burlywood;
 }
 
 .hamburger-menu {

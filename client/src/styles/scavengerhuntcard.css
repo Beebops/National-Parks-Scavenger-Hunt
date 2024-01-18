@@ -4,9 +4,19 @@
   background-color: saddlebrown;
 }
 
+.scavenger-hunt-card:hover {
+  opacity: 0.5;
+}
+
+.scavenger-hunt-title-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
 .scavenger-hunt-title {
   color: white;
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 .scavenger-hunt-image {
@@ -15,5 +25,5 @@
 
 .scavenger-hunt-check {
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
