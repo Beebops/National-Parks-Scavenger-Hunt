@@ -85,7 +85,12 @@ module.exports = (huntsService) => {
   router.put('/:huntId/species/:speciesId', async (req, res, next) => {
     try {
       const { huntId, speciesId } = req.params
-      const response = await huntsService.markSpeciesFound(huntId, speciesId)
+      const { isFound } = req.body
+      const response = await huntsService.updateSpeciesFoundStatus(
+        huntId,
+        speciesId,
+        isFound
+      )
       res.status(200).json(response)
     } catch (err) {
       next(err)

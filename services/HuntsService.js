@@ -134,14 +134,14 @@ class HuntsService {
     }
   }
 
-  async markSpeciesFound(huntId, speciesId) {
+  async updateSpeciesFoundStatus(huntId, speciesId, isFound) {
     try {
       const updateQuery = `
       UPDATE hunts_species
-      SET isFound = TRUE
+      SET isFound = $3
       WHERE hunt_id = $1 AND species_id = $2`
 
-      const values = [huntId, speciesId]
+      const values = [huntId, speciesId, isFound]
       const result = await pool.query(updateQuery, values)
 
       if (result.rowCount === 0) {

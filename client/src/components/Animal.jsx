@@ -1,15 +1,32 @@
-import {Link} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 import {useState} from 'react'
+import axios from 'axios'
 import '../styles/animal.css'
 
 export default function Animal({animal}) {
   const [isChecked, setIsChecked] = useState(false)
+  const {huntId} = useParams()
 
-  const handleChange = () => {
-    setIsChecked(!isChecked)
-  }
-
-  // if the animal is checked, update isFound in hunts_species table to true
+  const handleChange = async (speciesId) => {
+    const newCheckedState = !isChecked;
+    setIsChecked(newCheckedState);
+  
+    const token = localStorage.getItem('token');
+    if (token) {
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      try {
+        const response = await axios.put(`${huntId}/species/${speciesId}`, { isFound: newCheckedState }, headers);
+        console.log(response.data);
+      } catch (err) {
+        console.error('Error updating species status', err);
+      }
+    }
+  };
+  
 
   return (
     <>
