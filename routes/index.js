@@ -11,7 +11,10 @@ module.exports = (params) => {
     res.send('National Park Home Page')
   })
 
-  router.use('/users', usersRoute(params.userService, params.huntsService))
+  router.use(
+    '/users',
+    usersRoute(params.userService, params.huntsService, params.speciesService)
+  )
   router.use('/parks', parksRoute(params.parkService, params.speciesService))
   router.use('/species', speciesRoute(params.speciesService))
 

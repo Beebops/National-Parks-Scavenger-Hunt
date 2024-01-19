@@ -9,9 +9,8 @@ export default function Animal({animal}) {
     setIsChecked(!isChecked)
   }
 
-  console.log(`Animal ${animal.common_name} checked is: ${isChecked}`)
+  // if the animal is checked, update isFound in hunts_species table to true
 
-  console.log(animal)
   return (
     <>
         <input

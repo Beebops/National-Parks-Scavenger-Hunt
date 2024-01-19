@@ -134,6 +134,25 @@ class HuntsService {
     }
   }
 
+  async markSpeciesFound(huntId, speciesId) {
+    try {
+      const updateQuery = `
+      UPDATE hunts_species
+      SET isFound = TRUE
+      WHERE hunt_id = $1 AND species_id = $2`
+
+      const values = [huntId, speciesId]
+      const result = await pool.query(updateQuery, values)
+
+      if (result.rowCount === 0) {
+        throw new ExpressError('No matching hunt and species found', 404)
+      }
+    } catch (err) {
+      console.error('Error marking species as found:', err)
+      throw new ExpressError('Error marking species as found', 500)
+    }
+  }
+
   async removeSpeciesFromHunt(huntId, speciesId) {
     try {
       const result = await pool.query(
