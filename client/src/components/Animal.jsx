@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons'
 import ModalDeleteAnimal from './ModalDeleteAnimal'
 
-export default function Animal({animal}) {
+export default function Animal({animal, onDelete}) {
   const [isChecked, setIsChecked] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const {huntId} = useParams()
@@ -70,7 +70,8 @@ export default function Animal({animal}) {
             Authorization: `Bearer ${token}`
           }}
         await axios.delete(`/users/${userId}/hunts/${huntId}/species/${animal.species_id}`, headers)    
-        console.log('deleted')
+        onDelete(animal.species_id)
+        console.log('deleted', animal.species_id)
       } catch (err) {
         console.error('Deletion failed', err)
       }

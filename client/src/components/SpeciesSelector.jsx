@@ -43,8 +43,6 @@ const handleSubmit = async e => {
         Authorization: `Bearer ${token}`
       }
     } )
-    console.log('New hunt creted', response.data)
-  
     navigate('/home')
   } catch (err) {
     console.log('Error creating hunt: ', err)
