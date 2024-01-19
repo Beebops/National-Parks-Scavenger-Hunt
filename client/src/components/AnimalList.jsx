@@ -1,22 +1,17 @@
 import Animal from './Animal'
-import { Link } from 'react-router-dom'
+
+import '../styles/animal-list.css'
 
 export default function AnimalList({species}) {
-  return (
-    <div>
-      <h3>Animal List</h3>
-      <ul>
+ 
+  
+  return (  
+      <ul className='animal-list'>
         {species.map(animal => (
-          <div>
-            <Link to={`/species/${animal.species_id}`}><Animal key={animal.species_id} animal={animal} />
-              
-            </Link>
-          </div>
+          <li className='animal-list-item'>
+            <Animal key={animal.species_id} animal={animal} />
+          </li>
         ))}
-      </ul>
-
-    
-    </div>
-    
+      </ul>    
   )
 }

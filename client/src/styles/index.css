@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,400;0,8..144,500;0,8..144,700;1,8..144,200&family=Urbanist:wght@400;700&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   color: #432a1c;
   font-family: 'Roboto Serif', serif;
@@ -33,6 +37,8 @@ option {
 
 ul {
   list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 button {

@@ -1,0 +1,13 @@
+.animal-names {
+  margin: 0.5em 0.5em;
+  color: #432a1c;
+  font-weight: bold;
+}
+
+.animal-scientific-name {
+  font-style: italic;
+}
+
+input[type='checkbox'] {
+  margin: 20px;
+}

@@ -12,9 +12,9 @@ export default function ScavengerHuntCard({hunt}) {
         <img className='scavenger-hunt-image' src={hunt.park_image} alt={hunt.hunt_title}></img>
         <div className='scavenger-hunt-title-container'>
           <h3 className='scavenger-hunt-title'>{hunt.hunt_title}</h3>
-          <icon className='scavenger-hunt-check' style={{ display: hunt.is_complete ? 'block' : 'none'}}>
-          <FontAwesomeIcon icon={faSquareCheck} />
-        </icon>
+          
+          <FontAwesomeIcon icon={faSquareCheck} className='scavenger-hunt-check' style={{ display: hunt.is_complete ? 'block' : 'none'}}></FontAwesomeIcon>
+        
         </div>
         
         

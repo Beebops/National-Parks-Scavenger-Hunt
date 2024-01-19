@@ -1,5 +1,6 @@
 import {useParams, useNavigate} from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import formatDate from '../formatDate'
 import axios from 'axios'
 import AnimalList from "./AnimalList"
 import ModalDeleteHunt from './ModalDeleteHunt'
@@ -65,19 +66,24 @@ export default function ScavengerHunt() {
   return (
     <div className='scavenger-hunt-container'>
       <img className="scavenger-hunt-img" src={huntData.park_image} alt={huntData.hunt_title}></img>
-      <h2 className='scavenger-hunt-title'>{huntData.hunt_title}</h2>
-      <button onClick={(e) => {
+      <div className='scavenger-hunt-info'>
+        <div>
+          <h2 className='scavenger-hunt-info-title'>{huntData.hunt_title}</h2>
+          <p className='scavenger-hunt-dates'>Start Date: {formatDate(huntData.date_started)}</p>
+          {huntData.date_completed && <p className='scavenger-hunt-dates'>Completed: {formatDate(huntData.date_completed)}</p>}
+        </div>
+
+        <button onClick={(e) => {
             e.preventDefault()
             handleDeleteHunt()
           }} className='scavenger-hunt-delete-btn'>
-        Delete Hunt
-      </button>
-      <button className='scavenger-hunt-edit'>
-        Edit Hunt
-      </button>
+          Delete Hunt
+        </button>
+      </div>
       
-      <p className='scavenger-hunt-dates'>Date Created: {huntData.date_started}</p>
-      {huntData.date_completed && <p className='scavenger-hunt-dates'>Completed: {huntData.date_completed}</p>}
+
+      
+      
       <AnimalList species={huntData.speciesList} />
 
       <ModalDeleteHunt
