@@ -2,10 +2,15 @@ import {Link, useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import '../styles/animal.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons'
+import ModalDeleteAnimal from './ModalDeleteAnimal'
 
 export default function Animal({animal}) {
   const [isChecked, setIsChecked] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const {huntId} = useParams()
+  
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -49,7 +54,30 @@ export default function Animal({animal}) {
       }
     }
   };
+
+  const handleDeleteSpecies = () => {
+    setIsModalOpen(true)
+  }
   
+  const handleDeleteSpeciesConfirm = async () => {
+    const userId = localStorage.getItem('userId')
+    const token = localStorage.getItem('token')
+
+    if(userId && token) {
+      try {
+        const headers = {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }}
+        await axios.delete(`/users/${userId}/hunts/${huntId}/species/${animal.species_id}`, headers)    
+        console.log('deleted')
+      } catch (err) {
+        console.error('Deletion failed', err)
+      }
+    }  
+    
+    setIsModalOpen(false)
+  }
 
   return (
     <>
@@ -64,6 +92,18 @@ export default function Animal({animal}) {
           <span className="animal-scientific-name"> ({animal.scientific_name})</span>
           </p>
       </Link>
+      <button onClick={(e) => {
+        e.preventDefault()
+        handleDeleteSpecies()
+      }}>
+        <FontAwesomeIcon className="fa-delete" icon={faDeleteLeft} />
+      </button>
+      <ModalDeleteAnimal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleDeleteSpeciesConfirm}
+        animal={animal}
+      />
     </>
   )
 }

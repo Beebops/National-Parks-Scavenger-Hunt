@@ -5,17 +5,10 @@
 .animal-list-item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid gray;
 }
 
 .animal-list-item:last-child {
   border-bottom: 0;
 }
-
-/* .animal-list-li:nth-child(even) {
-  background-color: whitesmoke;
-}
-
-.animal-list-li:nth-child(odd) {
-  background-color: gainsboro;
-} */

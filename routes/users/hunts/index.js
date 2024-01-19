@@ -70,10 +70,9 @@ module.exports = (huntsService) => {
   })
 
   // Remove a species from an existing hunt
-  router.delete('/:huntId/species', async (req, res, next) => {
+  router.delete('/:huntId/species/:speciesId', async (req, res, next) => {
     try {
-      const huntId = req.params.huntId
-      const { speciesId } = req.body
+      const { huntId, speciesId } = req.params
       await huntsService.removeSpeciesFromHunt(huntId, speciesId)
       res.status(200).json({ message: 'Species successfully removed' })
     } catch (err) {

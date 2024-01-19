@@ -11,3 +11,7 @@
 input[type='checkbox'] {
   margin: 20px;
 }
+
+.fa-delete {
+  color: firebrick;
+}
