@@ -97,5 +97,18 @@ module.exports = (huntsService) => {
     }
   })
 
+  // Get the isFound status for species in a hunt
+  router.get('/:huntId/species-status', async (req, res, next) => {
+    try {
+      const huntId = req.params.huntId
+      const speciesStatuses = await huntsService.getSpeciesFoundStatusByHuntId(
+        huntId
+      )
+      res.status(200).json(speciesStatuses)
+    } catch (err) {
+      next(err)
+    }
+  })
+
   return router
 }

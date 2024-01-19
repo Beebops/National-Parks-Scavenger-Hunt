@@ -153,6 +153,27 @@ class HuntsService {
     }
   }
 
+  async getSpeciesFoundStatusByHuntId(huntId) {
+    try {
+      const speciesFoundStatusResult = await pool.query(
+        `SELECT species_id, isFound FROM hunts_species WHERE hunt_id = $1`,
+        [huntId]
+      )
+
+      if (speciesFoundStatusResult.rows.length === 0) {
+        throw new ExpressError('No species found for this hunt', 404)
+      }
+
+      return speciesFoundStatusResult.rows
+    } catch (err) {
+      if (err instanceof ExpressError) {
+        throw err
+      } else {
+        throw new ExpressError('Error retrieving species found status', 500)
+      }
+    }
+  }
+
   async removeSpeciesFromHunt(huntId, speciesId) {
     try {
       const result = await pool.query(
