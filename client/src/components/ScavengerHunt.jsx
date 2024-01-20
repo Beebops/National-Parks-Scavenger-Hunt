@@ -24,18 +24,23 @@ export default function ScavengerHunt() {
           headers: {
             Authorization: `Bearer ${token}`
           }}
-        try {
-          const huntResponse = await axios.get(`/users/${userId}/hunts/${huntId}`, headers)
-          const speciesStatusResponse = await axios.get(`/users/${userId}/hunts/${huntId}/species-status`, headers)
-
-          // Merge species data with isFound status
-          const updatedSpeciesList = huntResponse.data.speciesList.map(species => {
-            const foundStatus = speciesStatusResponse.data.find(status => status.species_id === species.species_id)
-            return {...species, isfound: foundStatus ? foundStatus.isfound : false}
-          })
-          setHuntData({ ...huntResponse.data, speciesList: updatedSpeciesList })
-          
-        } catch (err) {
+          try {
+            const huntResponse = await axios.get(`/users/${userId}/hunts/${huntId}`, headers);
+            let updatedSpeciesList = [];
+            
+            if (huntResponse.data.speciesList && huntResponse.data.speciesList.length > 0) {
+              const speciesStatusResponse = await axios.get(`/users/${userId}/hunts/${huntId}/species-status`, headers);
+      
+              // Merge species data with isFound status
+              updatedSpeciesList = huntResponse.data.speciesList.map(species => {
+                const foundStatus = speciesStatusResponse.data.find(status => status.species_id === species.species_id);
+                return {...species, isfound: foundStatus ? foundStatus.isfound : false};
+              });
+            }
+            
+            setHuntData({ ...huntResponse.data, speciesList: updatedSpeciesList });
+            
+          } catch (err) {
           console.error('Error fetching hunt data', err)
         }
       }   
@@ -47,6 +52,16 @@ export default function ScavengerHunt() {
     return huntData.speciesList.every(species => species.isfound);
   }
 
+  const updateSpeciesFoundStatus = (speciesId, isFound) => {
+    setHuntData(prevData => ({
+      ...prevData,
+      speciesList: prevData.speciesList.map(species => 
+        species.species_id === speciesId ? { ...species, isfound: isFound } : species
+      )
+    }));
+  };
+  
+  // if all species in a hunt are found, mark the hunt as completed, and fill in the date it was completed
   const handleMarkHuntComplete = async () => {
     if (checkAllSpeciesFound()) {
       const userId = localStorage.getItem('userId');
@@ -60,8 +75,9 @@ export default function ScavengerHunt() {
         };
         try {
           const updateData = { isComplete: true };
-          await axios.put(`/users/${userId}/hunts/${huntId}`, updateData, headers);
-          setHuntData({ ...huntData, is_complete: true });
+          const response = await axios.put(`/users/${userId}/hunts/${huntId}`, updateData, headers);
+          setHuntData({ ...huntData, is_complete: true, date_completed: response.data.date_completed })
+          navigate('/home')
         } catch (err) {
           console.error('Error marking hunt as complete', err);
         }
@@ -107,6 +123,7 @@ export default function ScavengerHunt() {
   }
  
   console.log(huntData)
+  
   return (
     <div className='scavenger-hunt-container'>
       <img className="scavenger-hunt-img" src={huntData.park_image} alt={huntData.hunt_title}></img>
@@ -116,20 +133,25 @@ export default function ScavengerHunt() {
           <p className='scavenger-hunt-dates'>Start Date: {formatDate(huntData.date_started)}</p>
           {huntData.date_completed && <p className='scavenger-hunt-dates'>Completed: {formatDate(huntData.date_completed)}</p>}
         </div>
-        <button
-          disabled={!checkAllSpeciesFound()}
-          onClick={handleMarkHuntComplete}
-          className='scavenger-hunt-complete-btn'>
-            Mark Hunt Complete</button>
-        <button onClick={(e) => {
+        <div className='scavenger-hunt-btn-container'>
+          <button
+            disabled={!checkAllSpeciesFound()}
+            onClick={handleMarkHuntComplete}
+            className='scavenger-hunt-complete-btn'
+            style={{ opacity: checkAllSpeciesFound() ? '1' : '.35'}}
+            >
+            Complete Hunt</button>
+          <button onClick={(e) => {
             e.preventDefault()
             handleDeleteHunt()
           }} className='scavenger-hunt-delete-btn'>
           Delete Hunt
-        </button>    
+          </button> 
+        </div>
+           
       </div>
       
-      <AnimalList species={huntData.speciesList} onDeleteSpecies={handleDeleteSpecies} />
+      <AnimalList species={huntData.speciesList} onDeleteSpecies={handleDeleteSpecies} onUpdateFoundStatus={updateSpeciesFoundStatus} />
 
       <ModalDeleteHunt
         isOpen={isModalOpen}

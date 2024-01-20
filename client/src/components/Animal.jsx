@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons'
 import ModalDeleteAnimal from './ModalDeleteAnimal'
 
-export default function Animal({animal, onDelete}) {
+export default function Animal({animal, onDelete, onUpdateFoundStatus}) {
   const [isChecked, setIsChecked] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const {huntId} = useParams()
@@ -24,7 +24,7 @@ export default function Animal({animal, onDelete}) {
           // find the species object of the current animal
           const speciesFound = response.data.find(species => species.species_id === animal.species_id)
           if(speciesFound) {
-            setIsChecked(speciesFound.isfound)          
+            setIsChecked(speciesFound.isfound)        
           } else {
             setIsChecked(false)
           }
@@ -39,6 +39,7 @@ export default function Animal({animal, onDelete}) {
   const handleChange = async (speciesId) => {
     const newCheckedState = !isChecked;
     setIsChecked(newCheckedState);
+    onUpdateFoundStatus(speciesId, newCheckedState);
   
     const token = localStorage.getItem('token');
     if (token) {
