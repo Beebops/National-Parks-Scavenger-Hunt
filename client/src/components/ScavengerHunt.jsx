@@ -77,6 +77,7 @@ export default function ScavengerHunt() {
           const updateData = { isComplete: true };
           const response = await axios.put(`/users/${userId}/hunts/${huntId}`, updateData, headers);
           setHuntData({ ...huntData, is_complete: true, date_completed: response.data.date_completed })
+          console.log(response.data)
           navigate('/home')
         } catch (err) {
           console.error('Error marking hunt as complete', err);

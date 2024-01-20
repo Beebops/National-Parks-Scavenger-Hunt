@@ -75,6 +75,16 @@ class HuntsService {
       updates.push(`is_complete = $${valueIndex}`)
       values.push(isComplete)
       valueIndex++
+
+      // Set date_completed based on isComplete status
+      if (isComplete) {
+        updates.push(`date_completed = $${valueIndex}`)
+        values.push(new Date()) // Current date/time
+      } else {
+        updates.push(`date_completed = $${valueIndex}`)
+        values.push(null) // Reset date_completed to null
+      }
+      valueIndex++
     }
 
     if (updates.length === 0 && newSpeciesIds.length === 0) {
@@ -82,20 +92,26 @@ class HuntsService {
     }
 
     try {
+      let updatedHunt
       if (updates.length > 0) {
-        await pool.query(
+        const updateResult = await pool.query(
           `UPDATE hunts SET ${updates.join(
             ', '
           )} WHERE hunt_id = $${valueIndex} RETURNING *`,
           [...values, huntId]
         )
+        updatedHunt = updateResult.rows[0]
       }
 
       // add new species to hunt
       for (const speciesId of newSpeciesIds) {
         await this.addSpeciesToHunt(huntId, speciesId)
       }
-      return this.getHuntById(huntId)
+
+      if (!updatedHunt) {
+        updatedHunt = await this.getHuntById(huntId)
+      }
+      return updatedHunt
     } catch (err) {
       if (err instanceof ExpressError) {
         throw err
